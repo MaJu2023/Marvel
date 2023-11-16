@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import "semantic-ui-css/semantic.min.css";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
+import Home from "./pages/Home";
+import Series from "./pages/Series";
+import Comics from "./pages/Comics";
+import Error404 from "./pages/Error404";
+import Header from "./components/Header";
+import useFetch from "./hooks/useFetch";
+
 
 function App() {
+
+  const exampleApli = useFetch(
+    "http://gateway.marvel.com/v1/public/comics?ts=1&apikey=990d047e273d92eafc5177d8b4005876&hash=e0ef59ded7c6cfe0859d71d09888b910"
+    ); 
+
+    console.log(exampleApli);
+    
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/inicio" element={<Home />} />
+          <Route path="/series" element={<Series />} />
+          <Route path="/comics" element={<Comics />} />
+          <Route path="*" element={<Error404 />} />
+        </Routes> 
+      </BrowserRouter>
+           {/* 
+        <Switch>
+          <Route path="/" exact component={() => <Home />} />
+          <Route path="/inicio" exact component={() => <Home />} />
+          <Route path="/series" exact component={() => <Series />} />
+          <Route path="/comics" exact component={() => <Comics />} />
+          <Route component={() => <Error404 />} />
+        </Switch>*/}
     </div>
   );
 }
